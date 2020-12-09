@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.cykj.mapper.AdminMapper">
+    <insert id="addUser" parameterType="admin">
+        insert into admin (username,pwd,tel,email,edu,ocu,sex,rgtime) values (#{username},#{pwd},#{tel},#{email},#{edu},#{ocu},#{sex},sysdate())
+    </insert>
+    <delete id="deleteUserById" parameterType="admin">
+        delete from admin where adminid = #{adminid}
+    </delete>
+    <update id="updateUser" parameterType="admin">
+        update admin set username = #{username} ,pwd = #{pwd} where adminid = #{adminid}
+    </update>
+    <select id="findAll" parameterType="admin" resultType="admin">
+        select * from admin where 1=1
+        <if test="username !=null">
+            and username = #{username}
+        </if>
+        <if test="pwd !=null">
+            and pwd = #{pwd}
+        </if>
+    </select>
+    <select id="pagecount" resultType="int">
+        select count(*) from admin
+    </select>
+    <select id="tabledisplay" parameterType="HashMap" resultType="admin">
+        select * from admin where 1=1
+        <if test="keyword != null">
+            and username = #{keyword}
+        </if>
+         limit #{start},#{end}
+    </select>
+</mapper>
